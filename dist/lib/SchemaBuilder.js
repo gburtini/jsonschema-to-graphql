@@ -270,31 +270,29 @@ var SchemaBuilder = function () {
         var graphDataType = _jsonSchemaUtils2.default.primitiveToGraphQLType(pkey.type);
 
         if (graphDataType) {
-          (function () {
-            var typeInfo = {
-              type: graphDataType
-            };
+          var typeInfo = {
+            type: graphDataType
+          };
 
-            var typeInfoArray = {
-              type: new _graphql.GraphQLList(graphDataType)
-            };
+          var typeInfoArray = {
+            type: new _graphql.GraphQLList(graphDataType)
+          };
 
-            var operatorsMap = _argsFactory2.default.operatorsMap(pkey.type);
-            // contains key as suffix and value to figure out if this operation applies on array or not.
-            var operatorSuffices = _lodash2.default.transform(_lodash2.default.values(operatorsMap), function (result, value) {
-              result[value.suffix] = value.isArray;
-            }, {});
+          var operatorsMap = _argsFactory2.default.operatorsMap(pkey.type);
+          // contains key as suffix and value to figure out if this operation applies on array or not.
+          var operatorSuffices = _lodash2.default.transform(_lodash2.default.values(operatorsMap), function (result, value) {
+            result[value.suffix] = value.isArray;
+          }, {});
 
-            _lodash2.default.each(operatorSuffices, function (value, key) {
-              if (key !== '_IsNull') {
-                args[pkey.name + key] = value ? typeInfoArray : typeInfo;
-              } else {
-                args[pkey.name + key] = {
-                  type: _jsonSchemaUtils2.default.primitiveToGraphQLType('boolean')
-                };
-              }
-            });
-          })();
+          _lodash2.default.each(operatorSuffices, function (value, key) {
+            if (key !== '_IsNull') {
+              args[pkey.name + key] = value ? typeInfoArray : typeInfo;
+            } else {
+              args[pkey.name + key] = {
+                type: _jsonSchemaUtils2.default.primitiveToGraphQLType('boolean')
+              };
+            }
+          });
         }
       });
       return args;

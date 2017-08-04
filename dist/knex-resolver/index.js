@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _typeof2 = require('babel-runtime/helpers/typeof');
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -168,28 +164,22 @@ var Resolver = function () {
       var knex = this.knex;
       return function (parent, args, options, info) {
         try {
-          var _ret = function () {
-            var query = knex(schemaDef.tableName);
-            // console.log('primaryKeys ::', primaryKeys);
-            _lodash2.default.each(schemaDef.primaryKeys, function (arg) {
-              console.log(arg, args[arg]);
-              query.where(arg, args[arg]);
-            });
+          var query = knex(schemaDef.tableName);
+          // console.log('primaryKeys ::', primaryKeys);
+          _lodash2.default.each(schemaDef.primaryKeys, function (arg) {
+            console.log(arg, args[arg]);
+            query.where(arg, args[arg]);
+          });
 
-            var updateArgs = _lodash2.default.omit(args, schemaDef.primaryKeys);
+          var updateArgs = _lodash2.default.omit(args, schemaDef.primaryKeys);
 
-            // console.log('updateArgs :: ', updateArgs);
-            if (_lodash2.default.isEmpty(updateArgs)) {
-              throw new Error('Nothing to update');
-            }
-            return {
-              v: query.update(updateArgs, ['*']).then(function (result) {
-                return _this6.returnResults(result, info);
-              })
-            };
-          }();
-
-          if ((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3.default)(_ret)) === "object") return _ret.v;
+          // console.log('updateArgs :: ', updateArgs);
+          if (_lodash2.default.isEmpty(updateArgs)) {
+            throw new Error('Nothing to update');
+          }
+          return query.update(updateArgs, ['*']).then(function (result) {
+            return _this6.returnResults(result, info);
+          });
         } catch (err) {
           // eslint-disable-next-line no-console
           console.log('error occurred in object() :: ', err);
@@ -205,19 +195,13 @@ var Resolver = function () {
       var knex = this.knex;
       return function (parent, args, options, info) {
         try {
-          var _ret2 = function () {
-            var query = knex(schemaDef.tableName);
-            _lodash2.default.each(args, function (value, arg) {
-              return query.where(arg, value);
-            });
-            return {
-              v: query.delete('*').then(function (result) {
-                return _this7.returnResults(result, info);
-              })
-            };
-          }();
-
-          if ((typeof _ret2 === 'undefined' ? 'undefined' : (0, _typeof3.default)(_ret2)) === "object") return _ret2.v;
+          var query = knex(schemaDef.tableName);
+          _lodash2.default.each(args, function (value, arg) {
+            return query.where(arg, value);
+          });
+          return query.delete('*').then(function (result) {
+            return _this7.returnResults(result, info);
+          });
         } catch (err) {
           // eslint-disable-next-line no-console
           console.log('error occurred in object() :: ', err);

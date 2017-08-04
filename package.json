@@ -38,7 +38,6 @@
     "bluebird": "^3.4.6",
     "dataloader": "^1.2.0",
     "express": "^4.14.0",
-    "express-graphql": "^0.5.4",
     "graphql": "^0.7.2",
     "jsontableschema": "^0.2.2",
     "knex": "^0.12.6",

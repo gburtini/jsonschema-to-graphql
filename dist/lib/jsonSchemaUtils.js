@@ -24,19 +24,17 @@ function enumToGraphQLField(enumeration, propName, ctx) {
   var typeName = '' + ctx.typeNamePrefix + _lodash2.default.upperFirst(_lodash2.default.camelCase(propName)) + 'Enum';
 
   if (!ctx.typeDefs[typeName]) {
-    (function () {
-      var enumValues = {};
-      // eslint-disable-next-line no-param-reassign
-      ctx.typeDefs[typeName] = new _graphql.GraphQLEnumType({
-        name: typeName,
-        values: _lodash2.default.reduce(enumeration, function (valuesT, enumValue) {
-          enumValues[enumValue] = {
-            value: enumValue
-          };
-          return enumValues;
-        }, {})
-      });
-    })();
+    var enumValues = {};
+    // eslint-disable-next-line no-param-reassign
+    ctx.typeDefs[typeName] = new _graphql.GraphQLEnumType({
+      name: typeName,
+      values: _lodash2.default.reduce(enumeration, function (valuesT, enumValue) {
+        enumValues[enumValue] = {
+          value: enumValue
+        };
+        return enumValues;
+      }, {})
+    });
   }
 
   return {
